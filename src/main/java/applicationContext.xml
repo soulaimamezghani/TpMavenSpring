@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-4.3.xsd
+		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.3.xsd">
+		<!-- exemple1 sans valorisation des attributs -->
+<bean id ="pers" class ="com.infotel.TpMavenSpring.metier.Personne"/> <!-- bean dans spring pour remplacer new -->
+
+<!-- exemple2 avec valorisation des attributs -->
+<bean id ="pers2" class ="com.infotel.TpMavenSpring.metier.Personne"> <!-- bean dans spring pour remplacer new -->
+	 <property name="idPersonne" value ="2"	/> <!-- comme ci new et set -->
+	 <property name="nom" value ="ZEC"	/> <!-- comme ci new et set -->
+	 <property name="prenom" value ="UNION"	/> <!-- comme ci new et set -->
+	 <property name="age" value ="20"	/> <!-- comme ci new et set -->
+	</bean>
+	<!-- exemple3 avec injection (la pesronn a besoin d'une adrs cest prcele cle etrangere cote personne -->
+	<bean id="adr1" class="com.infotel.TpMavenSpring.metier.Adresse"> <!-- definir onjet class -->
+	 <property name ="idAdresse" value="1"/>
+	 <property name ="numRue" value="15"/>
+	 <property name ="nomRue" value="1"/>
+	 <property name ="cp"  value="96666"/>
+	 <property name ="ville"  value="Paris"/>
+	 </bean>
+	 
+	 <bean id="pers3" class="com.infotel.TpMavenSpring.metier.Personne"><!-- bean cest objet ici cest objet personne -->
+	 <property name ="nom" value="chakroun"/>
+	 <property name ="prenom" value="achraf"/>
+	 <property name ="age" value="18"/>
+	 <property name ="idPersonne"  value="1"/>
+	 <property name ="adresse"  ref="adr1"/> <!-- outil pour injecter/la cle etrangr cet adresse ref l'objet adr1//une personne va s'injecter dans adresse -->
+	 </bean>
+	 <!-- création des beans pour injection /je vais creer ma personne -->
+	    <!-- bean de la personne à ajouter -->
+	 <bean id="pers4"  class="com.infotel.TpMavenSpring.metier.Personne"></bean>
+	     <!-- bean pour couche service (injection de la couche dao)-->
+	 <bean id="service" class ="com.infotel.TpMavenSpring.service.ServiceImpl"> <!-- remplace new serviceImpl -->
+	   <property name ="dao" ref ="dao"/><!-- injecter couche dao dans service -->
+	   </bean>
+	   <!-- bean de la couche dao  -->
+	 <bean id ="dao" class="com.infotel.TpMavenSpring.dao.DaoImpl"/> <!-- remplace new DaoImpl -->
+	 <!-- exemple1 sans valorisation des attributs -->
+	 <bean id ="format" class="com.infotel.TpMavenSpring.metier.Formation"/>
+	 <bean id ="promo" class="com.infotel.TpMavenSpring.metier.Promotion"/>
+	 <!-- exemple2 avec valorisation des attributs -->
+     <bean id ="format2" class="com.infotel.TpMavenSpring.metier.Formation">
+         <property name ="idformation" value="5"/>
+         <property name ="nomformation" value="Anglais"/>
+        </bean>
+     <bean id ="promo2" class="com.infotel.TpMavenSpring.metier.Promotion">
+         <property name ="idPromotion" value="8"/>
+         <property name ="nomPromotion" value="Toeic"/>
+        </bean>
+        <!-- injection de promotion dans formation-->
+	<bean id="format3" class="com.infotel.TpMavenSpring.metier.Formation"> <!-- definir onjet class -->
+	 <property name ="idformation" value="3"/>
+	 <property name ="nomformation" value="Mathematiques"/>
+	 </bean>
+	 
+	 <bean id="promo3" class="com.infotel.TpMavenSpring.metier.Promotion"><!-- bean cest objet ici cest objet personne -->
+	 <property name ="idPromotion" value="12"/>
+	 <property name ="nomPromotion" value="toffle"/>
+	 <property name ="formation"  ref="format3"/> <!-- outil pour injecter/la cle etrangr cet adresse ref l'objet adr1//une personne va s'injecter dans adresse -->
+	 </bean>
+	
+</beans>
